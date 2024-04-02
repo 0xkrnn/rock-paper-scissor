@@ -1,3 +1,3 @@
-let url = "http://localhost:3500"
+let url = "https://rock-paper-scissor-5tru.onrender.com"
 
 export default url
