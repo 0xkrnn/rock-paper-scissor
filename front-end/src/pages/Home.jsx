@@ -69,7 +69,7 @@ function Home() {
     }
 
     if (player1 && player2) {
-        if (playerOnePoint.current < 1 && playerTwoPoint.current < 1) startGame();
+        if (playerOnePoint.current < 5 && playerTwoPoint.current < 5) startGame();
         else {
             editPlayerDetail()
         }
