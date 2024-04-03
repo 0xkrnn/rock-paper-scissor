@@ -33,7 +33,6 @@ function Results() {
                                 <th className='p-4'> Games Played</th>
                                 <th className='p-4'> Win</th>
                                 <th className='p-4'> Lost</th>
-                                <th className='p-4'> Win %</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,7 +43,6 @@ function Results() {
                                         <td className='p-2 '>{item.matchPlayed}</td>
                                         <td className='p-2 '> {item.won} </td>
                                         <td className='p-2 '> {item.lose}</td>
-                                        <td className='p-2 '> {`${item.winPercentage} %`}</td>
                                     </tr>
                                 })
                             }

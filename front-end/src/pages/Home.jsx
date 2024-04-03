@@ -77,10 +77,11 @@ function Home() {
 
     const [model, SetModel] = useState(true)
 
+
+
     if (gameStart === false) {
         return (
             <div className="flex flex-col justify-center items-center h-lvh gap-8 font-poppins bg-gray-200">
-
                 <h1 className="text-7xl font-extrabold"> Rock , Paper & Scissor </h1>
                 <button className="text-lg font-semibold border border-black py-1 px-6 rounded-md hover:bg-black hover:text-white hover:border-white transition-all duration-300" onClick={gameStatus}> Start </button>
             </div>
@@ -93,8 +94,8 @@ function Home() {
             <div className='h-lvh flex justify-center items-center flex-col gap-4'>
                 <NavLink to={"/results"} className="text-blue-800 font-poppins text-right"> Results Page </NavLink>
                 {model ? <Model prop={{ playerOneName, setPlayerOneName, playerTwoName, setPlayerTwoName, SetModel }} /> : ""}
-                <div className='w-2/4 h-3/4 shadow-2xl shadow-black grid grid-cols-2 bg-[url("./assets/images/bg.jpg")]  bg-cover bg-center relative bg-white rounded-lg gap-2'>
-                    {winnerName ? <h1 className='text-red absolute bottom-12 left-[40%] uppercase text-red-700 font-extrabold text-xl '> {winnerName} </h1> : ""}
+                <div className='w-2/4 h-3/4 shadow-2xl shadow-black grid grid-cols-2 bg-[url("./assets/images/bg.jpg")]  bg-cover bg-bottom relative bg-white rounded-lg gap-2'>
+                    {winnerName ? <h1 className='text-red absolute bottom-12 w-full text-center uppercase text-green-700 font-extrabold text-md drop-shadow-lg'> {winnerName} </h1> : ""}
                     <div className='flex flex-col p-10 gap-4 items-center'>
                         <div className='flex justify-between items-center px-4'>
                             <h1 className='text-lg font-extrabold'> {playerOneName.toUpperCase()} </h1>

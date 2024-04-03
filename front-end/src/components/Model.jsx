@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import emoji from "../assets/images/emoji.png"
+import url from '../utils/utils';
 
 function Model({ prop }) {
 
@@ -7,12 +8,14 @@ function Model({ prop }) {
 
     const createUser = async () => {
         SetModel(false)
-        console.log(playerOneName, playerTwoName);
         const bodyData = {
             playerOne: playerOneName,
             playerTwo: playerTwoName
         }
-        let result = await fetch("http://localhost:3500/player", {
+
+        console.log(url);
+
+        let result = await fetch(`${url}/player`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -21,7 +24,6 @@ function Model({ prop }) {
         });
 
         let data = await result.json()
-        console.log(data);
     }
 
 

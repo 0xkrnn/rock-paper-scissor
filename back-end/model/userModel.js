@@ -17,12 +17,7 @@ const userSchema = new mongoose.Schema({
     lose: {
         type: Number,
         default: () => 0
-    },
-    winPercentage : {
-        type: Number,
-        default: () => 0
     }
-
 }, {
     collection: "players"
 });
