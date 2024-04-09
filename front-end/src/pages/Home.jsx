@@ -81,23 +81,12 @@ function Home({winner}) {
 
     const [model, SetModel] = useState(true)
 
-    //remove
-
-    let fetchUsers = async () => {
-        let result = await fetch(`${url}/player`, {
-            method: "GET"
-        })
-        let data = await result.json()
-        console.log(data);
-        console.log(url);
-    }
 
     if (gameStart === false) {
         return (
             <div className="flex flex-col justify-center items-center h-lvh gap-8 font-poppins bg-gray-200">
                 <h1 className="text-7xl font-extrabold"> Rock , Paper & Scissor </h1>
                 <button className="text-lg font-semibold border border-black py-1 px-6 rounded-md hover:bg-black hover:text-white hover:border-white transition-all duration-300" onClick={gameStatus}> Start </button>
-                <button onClick={fetchUsers}utton> Request </button>
             </div>
         );
     }
