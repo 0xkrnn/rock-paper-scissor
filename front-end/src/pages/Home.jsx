@@ -7,7 +7,9 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import url from "../utils/utils"
 
 
-function Home() {
+function Home({winner}) {
+
+    const {name,setName} = winner
 
     const [gameStart, setGameStart] = useState(false)
 
@@ -51,6 +53,8 @@ function Home() {
 
         let winner = playerOnePoint.current > playerTwoPoint.current ? playerOneName : playerTwoName
 
+        setName(winner)
+
         let userDetails = {
             won: winner,
             lose: winner == playerOneName ? playerTwoName : playerOneName
@@ -69,7 +73,7 @@ function Home() {
     }
 
     if (player1 && player2) {
-        if (playerOnePoint.current < 5 && playerTwoPoint.current < 5) startGame();
+        if (playerOnePoint.current < 2 && playerTwoPoint.current < 2) startGame();
         else {
             editPlayerDetail()
         }

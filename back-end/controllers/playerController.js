@@ -1,35 +1,47 @@
-const playerModel = require("../model/userModel")
-
+const pool = require("../model/db")
 
 const getAllPlayers = async (req, res) => {
-    let players = await playerModel.find()
-    res.json(players);
+    try {
+        let players = await pool.query("SELECT * FROM players");
+        console.log("roite")
+        res.json(players.rows);
+    } catch (err) {
+        console.log(err)
+        res.json({ "error": err })
+    }
 }
+
+
 
 
 const createPlayer = async (req, res) => {
 
     const { playerOne, playerTwo } = req.body
 
-    const findUserOne = await playerModel.find({ playerName: playerOne })
-    const findUserTwo = await playerModel.find({ playerName: playerTwo })
+    const findUserOne = await pool.query(
+        "SELECT player_name from players where player_name=$1",
+        [playerOne]
+    );
+    const findUserTwo = await pool.query(
+        "SELECT player_name from players where player_name=$1",
+        [playerTwo]
+    );
+
 
     try {
-        if (findUserOne.length == 0) {
-            const newUser = new playerModel({
-                playerName: playerOne
-            })
-            await newUser.save()
-            console.log("user1");
+        if (findUserOne.rowCount == 0) {
+            let newUser = await pool.query(
+                "INSERT INTO players(player_name) VALUES($1)",
+                [playerOne]
+            )
         }
 
-        if (findUserTwo.length == 0) {
+        if (findUserTwo.rowCount == 0) {
 
-            const newUser = new playerModel({
-                playerName: playerTwo
-            })
-            await newUser.save()
-            console.log("user2");
+            let newUser = await pool.query(
+                "INSERT INTO players(player_name) VALUES($1)",
+                [playerTwo]
+            )
         }
 
         res.status(201).json({ "message": "user created" })
@@ -40,32 +52,40 @@ const createPlayer = async (req, res) => {
     }
 }
 
+
 const updateUser = async (req, res) => {
     const { won, lose } = req.body
 
-    const findWinner = await playerModel.find({ playerName: won })
-    const findLoser = await playerModel.find({ playerName: lose })
+    const findWinner = await pool.query(
+        "SELECT * FROM players where player_name=$1",
+        [won]
+    );
+    const findLoser = await pool.query(
+        "SELECT * FROM players where player_name=$1",
+        [lose]
+    );
+
+    res.winner = findWinner.rows[0];
+    res.loser = findLoser.rows[0];
+
+    
 
     try {
-        await playerModel.updateOne({ _id: findWinner[0]._id },
-            {
-                $set: {
-                    won: findWinner[0].won + 1,
-                    matchPlayed: findWinner[0].matchPlayed + 1,
-                }
-            }
-        )
-        
-        console.log(findWinner[0].won, findWinner[0].matchPlayed);
 
-        await playerModel.updateOne({ _id: findLoser[0]._id },
-            {
-                $set: {
-                    lose: findLoser[0].lose + 1,
-                    matchPlayed: findLoser[0].matchPlayed + 1,
-                }
-            }
-        )
+        //winner Update
+
+        await pool.query(
+            "UPDATE players SET match_played=$1, won=$2 WHERE pid=$3",
+            [res.winner.match_played + 1, res.winner.won + 1, res.winner.pid]
+        );
+
+        // updation of loser's data
+
+        await pool.query(
+            "UPDATE players SET match_played=$1, lose=$2 WHERE pid=$3",
+            [res.loser.match_played + 1, res.loser.lose + 1, res.loser.pid]
+        );
+
 
         res.status(200).json({ "message": "Success" })
     }
