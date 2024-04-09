@@ -38,7 +38,7 @@ function Results() {
                         <tbody>
                             {
                                 users.map(item => {
-                                    return <tr key={item._id} className='uppercase border-b-2 text-center '>
+                                    return <tr key={item.pid} className='uppercase border-b-2 text-center '>
                                         <td className='p-2 '> {item.player_name} </td>
                                         <td className='p-2 '>{item.match_played}</td>
                                         <td className='p-2 '> {item.won} </td>
